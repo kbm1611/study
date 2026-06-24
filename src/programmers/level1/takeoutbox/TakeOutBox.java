@@ -3,6 +3,11 @@ package programmers.level1.takeoutbox;
 import java.util.*;
 
 public class TakeOutBox {
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        int result = sol.solution(6, 2, 4);
+        System.out.println( result );
+    }
 }
 
 // n개의 상자를 아래부터 쌓는다. 가로의 넓이는 w
@@ -14,24 +19,47 @@ public class TakeOutBox {
 // 배열을 만들때 13, 3 이면 -> 5 x 3  13 / 3
 class Solution {
     public int solution(int n, int w, int num) {
-        int answer = 0;
 
         // 두 정수의 나눗셈 올림 방법
         int h = ( n - 1 ) / w + 1;
 
-        // 너비와 높이를 가지고 2차원 박스 공간 배열을 생성
-        int[][] boxArea = new int[h][w];
-
-        int x = -1;
-        int y = ( num - 1 ) / w + 1; // 타겟 y좌표
-
-        // 타겟 y좌표가 짝수면 오른쪽부터 거꾸로 쓰여 있음
-        if( y % 2 == 0 ){
-            x =  num % w - 1;
-        }else{
-            x = w - (num % w) - 1;
+        // 마지막 열에 대한 배열을 너비만큼만 생성
+        int[] boxLastRow = new int[w];
+        int startNum = n - (n % w) + 1; // 마지막열 시작 숫자
+        System.out.println(startNum);
+        int idx = h % 2 == 0 ? w - 1 : 0;
+        while( startNum <= n ){
+            if( h % 2 == 0 ){
+                boxLastRow[idx] = startNum;
+                startNum++;
+                idx--;
+            }else{
+                boxLastRow[idx] = startNum;
+                startNum++;
+                idx++;
+            }
         }
+        System.out.println( Arrays.toString( boxLastRow ));
 
-        return answer;
+        int index = -1;
+        int x = -1;
+        int y = ( num - 1 ) / w; // 타겟 y좌표
+
+        // 기본 인덱스와 y값에 따른 x 인덱스 변화
+        index = num % w == 0 ? ( w - 1 ) : ( num % w - 1 );
+        x = y % 2 == 0 ? index : ( w - 1 - index ); // 타겟 x좌표
+        System.out.println("x : " + x + " y : " + y);
+
+        if( n % w == 0 ) return h - y;
+
+        if( boxLastRow[ x ] == 0) return h - y - 1;
+        else return h - y;
+
     }
 }
+// 1  2  3
+// 6  5  4
+// 7  8  9
+// 12 11 10
+// 13
+// 6 -> 이제 같은 x좌표에 얼마나 있는지 확인. 마지막 줄만 확인하면 됨.
