@@ -5,8 +5,8 @@ import java.util.*;
 public class Mostgift {
     public static void main(String[] args) {
         Solution sol = new Solution();
-        String[] friends = {"muzi", "ryan", "frodo", "neo"};
-        String[] gifts = {"muzi frodo", "muzi frodo", "ryan muzi", "ryan muzi", "ryan muzi", "frodo muzi", "frodo ryan", "neo muzi"};
+        String[] friends = {"joy", "brad", "alessandro", "conan", "david"};
+        String[] gifts = {"alessandro brad", "alessandro joy", "alessandro conan", "david alessandro", "alessandro david"};
         int result = sol.solution(friends, gifts);
 
         System.out.println("result = " + result);
@@ -36,6 +36,7 @@ class Solution {
         Map< String, Map<String, Integer> > relationship = new HashMap<>();
 
         for( String friend : friends ){
+            giftIndex.put( friend, 0);
             relationship.put( friend, new HashMap<>());
         }
 
@@ -52,6 +53,7 @@ class Solution {
         }
 
         // 선물 지수 확인
+        System.out.println("<선물지수확인>");
         for( String user : giftIndex.keySet() ){
             System.out.println( "user: " + user + "  score: " + giftIndex.get(user) );
         }
@@ -73,7 +75,6 @@ class Solution {
         // 이제 하나씩 비교하면서 체크
         for(int i = 0; i < friends.length; i++){
             String sender = friends[i];
-            Map<String, Integer> giveCount = relationship.get(friends[i]);
 
             for(int j = i+1; j < friends.length; j++){
 
