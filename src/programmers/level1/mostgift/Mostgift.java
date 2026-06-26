@@ -1,9 +1,6 @@
 package programmers.level1.mostgift;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Mostgift {
     public static void main(String[] args) {
@@ -69,22 +66,46 @@ class Solution {
             }
         }
 
+        int[] maxCount = new int[friends.length];
+
         // ryan, muzi, neo, frodo
         // 0 ,   1,    2,   3
         // 이제 하나씩 비교하면서 체크
         for(int i = 0; i < friends.length; i++){
-            int count = 0;
             String sender = friends[i];
             Map<String, Integer> giveCount = relationship.get(friends[i]);
 
             for(int j = i+1; j < friends.length; j++){
+
                 String receiver = friends[j];
 
+                int one = 0;
+                int two = 0;
 
+                if(relationship.get(sender).get(receiver) != null){
+                    one = relationship.get(sender).get(receiver);
+                }
+                if(relationship.get(receiver).get(sender) != null){
+                    two = relationship.get(receiver).get(sender);
+                }
+
+                if(one > two) maxCount[i]++;
+                if(one == two){
+                    if(giftIndex.get(sender) > giftIndex.get(receiver)) maxCount[i]++;
+                    if(giftIndex.get(sender) < giftIndex.get(receiver)) maxCount[j]++;
+                }
+                if(one < two) maxCount[j]++;
             }
         }
 
+        System.out.println("-----------------------");
+        for(int i = 0; i < maxCount.length; i++){
+            System.out.println( friends[i] + " : " + maxCount[i]);
+        }
 
+        for (int count : maxCount) {
+            if (answer < count) answer = count;
+        }
 
         return answer;
     }
