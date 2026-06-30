@@ -36,6 +36,9 @@ class Solution {
             sum[i] = signals[i][0] + signals[i][1] + signals[i][2]; // 초록불 + 노란불 + 빨간불
         }
 
+        // 각 신호등을 배열로 생성해야하나? 어떻게?
+        //
+
         System.out.println("시작 지점");
         System.out.println( Arrays.toString( startPoint ) );
         System.out.println("\n노란불 지속시간");
@@ -46,19 +49,14 @@ class Solution {
         // 시작지점 부터 노란불 지속 시간 - 그 외 지속시간 - 노란불 - 그 외 반복
         // -1를 반환하는 기준: 신호등 sum 배열 중 같은 배열이 존재하고 그 두 배열이 서로 첫번째 루프때 겹치지 않는다면.
         // 최소공배수를 찾는 로직을 도입하여 계산.
-        int gcd = getGCD( sum );
+        int lcm = getLCM( sum );
 
-        // 서로소 인 경우(1)
-        if( gcd == 1 ){
-            for (int num : sum) {
-                gcd *= num;
-            }
-        }
+        int currentPos = 0; // 현재 위치
 
-        int startPos = 0; // 시작위치
-
-        // 시작위치가 gcd(최소공배수)를 넘길 경우 -1 return
-        while( startPos < gcd ){
+        // 현재위치가 lcm(최소공배수)를 넘길 경우 -1 return
+        // 시작위치부터 하나씩 살펴보면서 각 배열에 노란불이 켜지는 지 확인.
+        // 확인시 노란불이 배열의 크기만큼(3개의 신호등이면 3) 켜지면 그 값을 리턴
+        while( currentPos < lcm ){
 
         }
 
@@ -72,23 +70,21 @@ class Solution {
         return GCD(num2, num1 % num2);
     }
 
-    // 최소 공약수 구하는 함수
+    // 최소 공배수 구하는 함수
     public int LCM(int num1, int num2){
-        return num1 * num2 / GCD( num1, num2 );
+        return num1 / GCD( num1, num2 ) * num2; // 오버플로우 되지 않게
     }
 
-    public int getGCD(int[] numbers){
+    // 최소 공배수 배열 구하는 함수
+    public int getLCM(int[] numbers){
         if(numbers == null || numbers.length == 0) return 0;
 
         // 배열의 첫 번째 값으로 시작
         int first = numbers[0];
 
-        // 두번째 값부터 순차적으로 누적하여 GCD 계산
+        // 두번째 값부터 순차적으로 누적하여 LCM 계산
         for( int i = 1; i < numbers.length; i++ ){
-            first = GCD( first, numbers[i] );
-
-            // 중간에 최대공약수가 1이 되면 더 이상 계산할 필요없이 서로소임.
-            if( first == 1 ) return 1;
+            first = LCM( first, numbers[i] );
         }
 
         return first;
