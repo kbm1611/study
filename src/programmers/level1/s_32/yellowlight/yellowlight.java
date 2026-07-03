@@ -6,8 +6,8 @@ public class yellowlight {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        int result = sol.solution(new int[][]{{2,1,2}, {5,1,1}}); // 기댓값 13
-        System.out.println( result );
+        int result = sol.solution(new int[][]{{2,3,2}, {3,1,3}, {2, 1, 1}}); // 기댓값 13
+        System.out.println( "답: " + result );
     }
 }
 
@@ -29,39 +29,56 @@ class Solution {
         int[] yellow = new int[signalNum]; // 지속시간
         int[] sum = new int[signalNum]; // 지속시간 전체 합
 
+        int[][] signalTime = new int[signals.length][3];
+
         // 각 배열 지속 시간 넣기
         for( int i = 0; i < signalNum; i++ ){
             startPoint[i] = signals[i][0] + 1; // 시작 지점
             yellow[i] = signals[i][1]; // 노란불 길이 1
             sum[i] = signals[i][0] + signals[i][1] + signals[i][2]; // 초록불 + 노란불 + 빨간불
-        }
 
-        // 각 신호등을 배열로 생성해야하나? 어떻게?
-        //
+            signalTime[i][0] = signals[i][0];
+            signalTime[i][1] = signals[i][0] + signals[i][1];
+            signalTime[i][2] = signals[i][0] + signals[i][1] + signals[i][2];
+        }
 
         System.out.println("시작 지점");
         System.out.println( Arrays.toString( startPoint ) );
         System.out.println("\n노란불 지속시간");
         System.out.println( Arrays.toString( yellow ) );
         System.out.println("\n전체 지속시간 합");
-        System.out.println( Arrays.toString( sum ) );
+        for (int[] time : signalTime) {
+            System.out.println(Arrays.toString(time));
+        }
+
 
         // 시작지점 부터 노란불 지속 시간 - 그 외 지속시간 - 노란불 - 그 외 반복
         // -1를 반환하는 기준: 신호등 sum 배열 중 같은 배열이 존재하고 그 두 배열이 서로 첫번째 루프때 겹치지 않는다면.
         // 최소공배수를 찾는 로직을 도입하여 계산.
         int lcm = getLCM( sum );
+        System.out.println( "최소공배수(lcm): " + lcm );
 
-        int currentPos = 0; // 현재 위치
+        int currentPos = 1; // 현재 위치
 
         // 현재위치가 lcm(최소공배수)를 넘길 경우 -1 return
         // 시작위치부터 하나씩 살펴보면서 각 배열에 노란불이 켜지는 지 확인.
+        // 수학적으로 생각하자. currentPos % sum[i] ( 만약 2 1 2 이면 0~4까지 존재하게 되고 0,1 이 초록불, 2가 노란불, 3이 빨간불이 될 것이다. )
+        // signals[i][0] 보다 작으면 초록불 signals[i][1] 보다 같거나 크고 signals[i][2] 보다 작으면 노란불 !!
         // 확인시 노란불이 배열의 크기만큼(3개의 신호등이면 3) 켜지면 그 값을 리턴
         while( currentPos < lcm ){
+            int count = 0;
+            for(int i = 0; i < signalTime.length; i++){
+                int check = currentPos % sum[i];
+                if( check > signalTime[i][0] && check <= signalTime[i][1] ) count++;
+            }
 
+            if( count == signalTime.length ) return currentPos;
+
+            currentPos++;
         }
 
 
-        return answer;
+        return -1;
     }
 
     // 최대 공약수 구하는 함수
