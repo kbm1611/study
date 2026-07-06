@@ -1,4 +1,4 @@
-package level1.bandagewarapping;
+package programmers.level1.bandagewarapping;
 
 public class BandWarp {
     public static void main(String[] args) {

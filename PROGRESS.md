@@ -44,8 +44,8 @@
 
 | 문제명/풀이명 | 상태 | 핵심 개념 | 파일 |
 | --- | --- | --- | --- |
-| 붕대 감기 (BandWarp) | 완료 | 구현 | `src/level1/bandagewarapping/BandWarp.java` |
-| 동영상 재생기 (VideoPlayer) | 완료 | 구현 | `src/level1/videoplayer/VideoPlayer.java` |
+| 붕대 감기 (BandWarp) | 완료 | 구현 | `src/programmers/level1/bandagewarapping/BandWarp.java` |
+| 동영상 재생기 (VideoPlayer) | 완료 | 구현 | `src/programmers/level1/videoplayer/VideoPlayer.java` |
 | 2016년 (Calday) | 완료 | 날짜, 구현 | `src/programmers/level1/s_1/calday/Calday.java` |
 | 크레인 인형뽑기 게임 (ClawMachine) | 완료 | 스택, 구현 | `src/programmers/level1/s_2/clawmachine/ClawMachine.java` |
 | 다트 게임 (DartGame1) | 완료 | 문자열, 구현 | `src/programmers/level1/s_3/dartgame/DartGame1.java` |
@@ -91,11 +91,3 @@
 | 문제명/풀이명 | 상태 | 핵심 개념 | 파일 |
 | --- | --- | --- | --- |
 | NumberBaseball | 미완 | 완전탐색 | `src/programmers/level3/NumberBaseball.java` |
-
-## 정리 예정
-
-| 항목 | 메모 |
-| --- | --- |
-| Level 2, Level 3 풀이 완료 | 미완 문제를 다시 풀고 정답 처리 여부 확인하기 |
-| 문제명 재확인 | `노란불 신호등`, `중요한 단어`처럼 코드 설명 기반으로 적은 항목은 필요하면 공식 표기 확인하기 |
-| 핵심 개념 보강 | 풀이를 다시 보며 정확한 알고리즘 유형으로 수정하기 |
